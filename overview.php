@@ -26,22 +26,44 @@ Let's see who needed help...
           die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
       }
 
+      // get the overview data
+      $overviewSql = "select teamId, teamName, count(clueId) as numClues, sum(penaltyMins) as totalPenalty from penalty p, team t, clue c where t.id = p.teamId and c.id = p.clueId group by teamId, teamName order by teamName";
 
-      // determine the team
+      $resultOverview = $mysqli->query($overviewSql);
+
+      if ($resultOverview->num_rows > 0) {
+          // output data of each row
+          echo "<div class='resultDiv'><table class='tableStyle'><tr><th>Team</th><th># Clues</th><th>Total Penalty</th></tr>";
+          while($row = $resultOverview->fetch_assoc()) {
+              echo "<tr>";
+              $teamName = $row["teamName"];
+              $totalPenalty = $row['totalPenalty'];
+              $numClues = $row['numClues'];
+              echo "<td style='width:150px'>" . $teamName . "</td><td>" . $numClues . "</td><td>" . $totalPenalty . " </td>";
+          }
+          echo "</tr></table></div>";
+      } else {
+          print($mysqli->error);
+      }
+
+      echo "<br/><br/>";
+
+      // get teh per penalty data
       $selectTeam = "select p.id, teamId, teamName, clueId, penaltyMins, created, track from penalty p, team t, clue c where t.id = p.teamId and c.id = p.clueId order by teamName, clueId";
 
       $resultTeam = $mysqli->query($selectTeam);
 
       if ($resultTeam->num_rows > 0) {
           // output data of each row
-          echo "<div class='resultDiv'><table class='tableStyle'><tr><th>Team</th><th>Clue</th><th>Track</th><th>Penalty</th></tr>";
+          echo "<div class='resultDiv'><table class='tableStyle'><tr><th>Team</th><th>Clue</th><th>Track</th><th>Penalty</th><th>Time</th></tr>";
           while($row = $resultTeam->fetch_assoc()) {
               echo "<tr>";
               $teamName = $row["teamName"];
               $penalty = $row['penaltyMins'];
               $clueId = $row['clueId'];
 	      $trackId = $row['track'];
-              echo "<td style='width:150px'>" . $teamName . "</td><td>" . $clueId . "</td><td>" . $trackId . "</td><td>" . $penalty . " </td>";
+	      $created = $row['created'];
+              echo "<td style='width:150px'>" . $teamName . "</td><td>" . $clueId . "</td><td>" . $trackId . "</td><td>" . $penalty . " </td><td>" . $created . " </td>";
           }
           echo "</tr></table></div>";
       } else {
