@@ -24,7 +24,7 @@ Let's see who needed help...
 
       // Output any connection error
       if ($mysqli->connect_error) {
-          die("Error : " . mysqli_connect_error());
+          die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
       }
 
       // get the overview data
