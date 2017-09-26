@@ -13,11 +13,10 @@
       </p>
 
       <form method="post" action="process.php">
-
 	<p>
 	  <?php 
 	     $code = $_GET['code'];
-	     //print($code);
+	     //echo($code);
 
 	     //mysql credentials
 	     $mysql_host = "localhost";
