@@ -17,7 +17,6 @@
 	  <?php 
 	     $code = $_GET['code'];
 	     //echo($code);
-	     $invalidTeam = 'FALSE';
 
 	     //mysql credentials
 	     $mysql_host = "localhost";
@@ -46,7 +45,7 @@
               echo "<div class='teamName'>Your team name:<br>" . $teamName . "</div>";
             }
 	  } else {
-	    $invalidTeam = 'TRUE';
+	    $invalid = true;
             echo "<div class='teamNameError'>Your team password is not valid, please call in for help with clues.</div>";
 	  }
 	?>
@@ -74,6 +73,7 @@
 
        echo('Clue: <select id="clueNumber" name="clueNumber" class="selectClass">');
        echo('<option value="" selected>Select Your Clue Number</option>');
+       echo('<option value="-1">TEST</option>');
        echo('<option value="1">1</option>');
        echo('<option value="2">2</option>');
        echo('<option value="3">3</option>');
@@ -99,7 +99,7 @@ Track: <select id="trackNumber" name="trackNumber" class="selectClass">
 <input type="hidden" name="code" value="<?php echo $code;?>" />
 <div style="padding-top:20px">
   <?php
-     if($invalidTeam !== 'TRUE') {
+     if(!$invalid) {
          echo('<button class="lgButton" type="submit" value="Submit">Solve</button>');
      }
   ?>

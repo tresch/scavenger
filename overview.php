@@ -50,7 +50,7 @@ Let's see who needed help...
       echo "<br/><br/>";
 
       // get teh per penalty data
-      $selectTeam = "select p.id, teamId, teamName, clueId, penaltyMins, created, track from penalty p, team t, clue c where t.id = p.teamId and c.id = p.clueId order by teamName, clueId";
+      $selectTeam = "select p.id, teamId, teamName, clueId, penaltyMins, created, trackId from penalty p, team t, clue c where t.id = p.teamId and c.id = p.clueId order by teamName, clueId";
 
       $resultTeam = $mysqli->query($selectTeam);
 
@@ -62,12 +62,13 @@ Let's see who needed help...
               $teamName = $row["teamName"];
               $penalty = $row['penaltyMins'];
               $clueId = $row['clueId'];
-	      $trackId = $row['track'];
+	      $trackId = $row['trackId'];
 	      $created = $row['created'];
               echo "<td style='width:150px'>" . $teamName . "</td><td>" . $clueId . "</td><td>" . $trackId . "</td><td>" . $penalty . " </td><td>" . $created . " </td>";
           }
           echo "</tr></table></div>";
       } else {
+          echo "No one needed help or error";
           print($mysqli->error);
       }
 
