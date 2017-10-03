@@ -85,9 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is coming from a form
 	    if($clue_number != -1 && $track_number != 'TEST') {
 	       echo 'in here';
 	        $mysqli->query($sql);
-	    } else {
-	       echo 'not running';
-            }
+	    }
 	}
     } else {
         echo "There is a problem. Call in for the solution.";
